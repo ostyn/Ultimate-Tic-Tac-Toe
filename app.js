@@ -2,6 +2,9 @@ export class App {
     constructor() {
         this.message = "";
 		this.greeting = true;
+		this.items = [];
+		for(var i = 0; i<=1000; i++)
+			this.items.push(i);
     }
  
     activate() {
@@ -15,5 +18,5 @@ export class App {
 			this.activate();
 		this.greeting = !this.greeting;
     }
- 
+
 }

@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <div>${message}</div>
-        <button click.trigger="changeMessage()">Say Something</button>
-    </div>
+<require from="./fizz-buzz"></require>
+	<div>
+		<div>${message}</div>
+		<button click.trigger="changeMessage()">Say Something</button>
+		<div repeat.for="item of items">${item | fizzBuzz}</div>
+	</div>
 </template>
