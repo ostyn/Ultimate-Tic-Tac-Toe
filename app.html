@@ -1,8 +1,8 @@
 <template>
-<require from="./fizz-buzz"></require>
 	<div>
-		<div>${message}</div>
-		<button click.trigger="changeMessage()">Say Something</button>
-		<div repeat.for="item of items">${item | fizzBuzz}</div>
+		<ul>
+			<li repeat.for="link of router.navigation" class="${row.isActive ? 'active' : ''}"><a href=${link.href}>${link.title}</a></li>
+		</ul>
 	</div>
+	<router-view></router-view>
 </template>

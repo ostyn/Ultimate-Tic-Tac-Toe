@@ -5,7 +5,8 @@ System.config({
   babelOptions: {
     "optional": [
       "runtime"
-    ]
+    ],
+    "stage": 0
   },
   paths: {
     "github:*": "jspm_packages/github/*",
@@ -15,6 +16,7 @@ System.config({
   map: {
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.14.1",
     "aurelia-framework": "github:aurelia/framework@0.13.4",
+    "aurelia-http-client": "github:aurelia/http-client@0.10.3",
     "babel": "npm:babel-core@5.8.22",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "core-js": "npm:core-js@0.9.18",
@@ -59,6 +61,10 @@ System.config({
     },
     "github:aurelia/history-browser@0.6.2": {
       "aurelia-history": "github:aurelia/history@0.6.1",
+      "core-js": "npm:core-js@0.9.18"
+    },
+    "github:aurelia/http-client@0.10.3": {
+      "aurelia-path": "github:aurelia/path@0.8.1",
       "core-js": "npm:core-js@0.9.18"
     },
     "github:aurelia/loader-default@0.9.5": {
