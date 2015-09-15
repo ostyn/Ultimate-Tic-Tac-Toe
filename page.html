@@ -1,4 +1,10 @@
 <template>
 Cards:
 ${text}
+<div repeat.for='draw of drawnCards'>
+	<div repeat.for='card of draw.cards'>
+		<img src=${card.images.png}>
+	</div>
+</div>
+<button click.trigger="draw(3)">Draw!</button>
 </template>

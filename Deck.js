@@ -1,12 +1,14 @@
-import {HttpClient} from 'aurelia-http-client';
 export class Deck {
-	static inject = [HttpClient];
-	constructor(http){
+	constructor(http, numberOfDecks=1){
 		this.http = http;
-		return this.http.get('http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
-		.then(values => this.id = values.response.deck_id);
+		this.id = this.http.get('http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=' + numberOfDecks)
+		.then(values => this.id = JSON.parse(values.response).deck_id);
 	}
-	getCards(number){
+	drawCards(number){
 		return this.http.get('http://deckofcardsapi.com/api/deck/'+this.id+'/draw/?count='+number);
+
+	}
+	shuffle(){
+		return this.http.get('http://deckofcardsapi.com/api/deck/'+this.id+'/shuffle/');
 	}
 }

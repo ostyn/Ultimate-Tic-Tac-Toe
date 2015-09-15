@@ -1,11 +1,19 @@
 import {HttpClient} from 'aurelia-http-client';
+import {Deck} from 'Deck';
 export class Page {
 	static inject = [HttpClient];
 	constructor(http){
-        this.http = http;
+		this.deck = new Deck(http);
+		this.drawnCards = [];
     }
 	activate(params){
-		return this.http.get('http://deckofcardsapi.com/api/deck/new/shuffle/?deck_count='+params.id)
-		.then(values => this.text = values.response);
+	}
+	draw(numberOfCards){
+		this.deck.drawCards(numberOfCards)
+			.then(values => this.drawnCards[this.drawnCards.length] = JSON.parse(values.response));
+	}
+	shuffle(){
+		//todo
+		return;
 	}
 }

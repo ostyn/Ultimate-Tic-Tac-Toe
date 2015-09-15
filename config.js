@@ -15,8 +15,9 @@ System.config({
 
   map: {
     "aurelia-bootstrapper": "github:aurelia/bootstrapper@0.14.1",
+    "aurelia-fetch-client": "github:aurelia/fetch-client@0.2.0",
     "aurelia-framework": "github:aurelia/framework@0.13.4",
-    "aurelia-http-client": "github:aurelia/http-client@0.10.3",
+    "aurelia-http-client": "github:aurelia/http-client@0.11.0",
     "babel": "npm:babel-core@5.8.22",
     "babel-runtime": "npm:babel-runtime@5.8.20",
     "core-js": "npm:core-js@0.9.18",
@@ -48,6 +49,9 @@ System.config({
     "github:aurelia/event-aggregator@0.6.2": {
       "aurelia-logging": "github:aurelia/logging@0.6.4"
     },
+    "github:aurelia/fetch-client@0.2.0": {
+      "core-js": "npm:core-js@0.9.18"
+    },
     "github:aurelia/framework@0.13.4": {
       "aurelia-binding": "github:aurelia/binding@0.8.6",
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
@@ -63,8 +67,8 @@ System.config({
       "aurelia-history": "github:aurelia/history@0.6.1",
       "core-js": "npm:core-js@0.9.18"
     },
-    "github:aurelia/http-client@0.10.3": {
-      "aurelia-path": "github:aurelia/path@0.8.1",
+    "github:aurelia/http-client@0.11.0": {
+      "aurelia-path": "github:aurelia/path@0.9.0",
       "core-js": "npm:core-js@0.9.18"
     },
     "github:aurelia/loader-default@0.9.5": {
