@@ -5,12 +5,13 @@ export class Page {
 	constructor(http){
 		this.deck = new Deck(http);
 		this.drawnCards = [];
+		this.text = "Ewoks!";
     }
-	activate(params){
-	}
 	draw(numberOfCards){
 		this.deck.drawCards(numberOfCards)
-			.then(values => this.drawnCards[this.drawnCards.length] = JSON.parse(values.response));
+			.then(
+				values => this.drawnCards = this.drawnCards.concat(JSON.parse(values.response).cards)
+			);
 	}
 	shuffle(){
 		//todo
