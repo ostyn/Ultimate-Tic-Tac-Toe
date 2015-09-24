@@ -18,8 +18,8 @@ System.config({
     "aurelia-fetch-client": "github:aurelia/fetch-client@0.2.0",
     "aurelia-framework": "github:aurelia/framework@0.13.4",
     "aurelia-http-client": "github:aurelia/http-client@0.11.0",
-    "babel": "npm:babel-core@5.8.22",
-    "babel-runtime": "npm:babel-runtime@5.8.20",
+    "babel": "npm:babel-core@5.8.25",
+    "babel-runtime": "npm:babel-runtime@5.8.25",
     "core-js": "npm:core-js@0.9.18",
     "github:aurelia/binding@0.8.6": {
       "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.9.2",
@@ -134,7 +134,7 @@ System.config({
     "github:jspm/nodelibs-process@0.1.1": {
       "process": "npm:process@0.10.1"
     },
-    "npm:babel-runtime@5.8.20": {
+    "npm:babel-runtime@5.8.25": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:core-js@0.9.18": {
