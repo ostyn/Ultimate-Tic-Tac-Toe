@@ -1,3 +1,7 @@
 .active{
 	text-weight: bold;
 }
+.column{
+	display: inline-block;
+	width: 75px;
+}

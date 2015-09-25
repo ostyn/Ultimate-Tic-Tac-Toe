@@ -8,7 +8,8 @@ export class App {
 		config.title = 'Testering';
 		config.map([
 		  { route: ['','home'], name: 'home', moduleId: 'Home', nav: true, title:'Home' },
-		  { route: ['page/:id'], name: 'page', moduleId: 'Page', nav: false, title:'page' },
+		  { route: ['cards/:id'], name: 'cards', moduleId: 'Cards', nav: false, title:'cards' },
+		  { route: ['ttt'], name: 'ttt', moduleId: 'TicTacToe', nav: true, title:'Tic-Tac-Toe' },
 		]);
 
 		this.router = router;
