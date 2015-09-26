@@ -1,10 +1,16 @@
 <template>
 	XO here we go
 	<br>
+	<br>
 	<div class="column" repeat.for="column of grid">
 		<div class="cell" repeat.for="cell of column">
 			<button class="cell" click.delegate="$parent.$parent.play($parent.$parent.activePlayer(), $parent.$index, $index)">${cell}</button>
 		</div>
 	</div>
-	${(gameOver)?'GAME OVER' : 'Playing...'}
+	<br>
+	${(winningPlayer !== "") ? winningPlayer + " is the winner!" : activeToken + "'s turn"}
+	<br>
+	${message}
+	<br>
+	<button click.trigger="newGame()">new game</button>
 </template>
