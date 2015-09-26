@@ -3,7 +3,8 @@
 	<br>
 	<div class="column" repeat.for="column of grid">
 		<div class="cell" repeat.for="cell of column">
-			<button click.delegate="$parent.$parent.play('x', $parent.$index, $index)">${cell}</button>
+			<button class="cell" click.delegate="$parent.$parent.play($parent.$parent.activePlayer(), $parent.$index, $index)">${cell}</button>
 		</div>
 	</div>
+	${(gameOver)?'GAME OVER' : 'Playing...'}
 </template>

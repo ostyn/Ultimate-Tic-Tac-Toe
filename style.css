@@ -5,3 +5,7 @@
 	display: inline-block;
 	width: 75px;
 }
+.cell{
+	width: 75px;
+	height: 75px;
+}
