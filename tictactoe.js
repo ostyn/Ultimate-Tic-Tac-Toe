@@ -8,22 +8,25 @@ export class TicTacToe {
 		this.message = "";
 		this.activeToken = 'O'
 		this.grid = [];
+		this.active = true;
 		this.winningPlayer = "";
+		this.movesLeft = this.size*this.size;
 		for (var column = 0; column < this.size; column++) {
 			for (var row = 0; row < this.size; row++) {
 				if (!this.grid[row])
 					this.grid[row] = [];
-				this.grid[row][column] = "";
+				this.grid[row][column] = "-";
 			}
 		}
 	}
 	play(token, x, y) {
 		this.message = "";
 		if (this.winningPlayer !== "" || this.movesLeft === 0) {
+			this.active = false;
 			this.message = "click new game to start again";
 			return;
 		}
-		if (this.grid[x][y] === "") {
+		if (this.grid[x][y] === "-") {
 			this.grid[x][y] = token;
 			this.winningPlayer = this.hasGameEnded();
 			this.movesLeft--;
@@ -63,7 +66,7 @@ export class TicTacToe {
 	}
 	checkLine(x, y, vector, size) {
 		var startingValue = this.grid[x][y];
-		if (startingValue === "")
+		if (startingValue === "-")
 			return false;
 		for (var i = 0; i < size - 1; i++) {
 			x = x + vector[0];
