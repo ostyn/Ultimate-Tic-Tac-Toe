@@ -1,12 +1,19 @@
+import {customElement, bindable, inject} from 'aurelia-framework';
+import {GameState} from './GameState'
+@inject(GameState)
+@customElement('ttt')
 export class TicTacToe {
-	constructor() {
-		this.size = 3;
+	@bindable size;
+	@bindable x;
+	@bindable y;
+	constructor(gs) {
+		this.gs = gs;
+	}
+	created() {
 		this.newGame();
-		this.movesLeft = this.size*this.size;
 	}
 	newGame() {
-		this.message = "";
-		this.activeToken = 'O'
+		this.gs.message = "";
 		this.grid = [];
 		this.active = true;
 		this.winningPlayer = "";
@@ -20,48 +27,62 @@ export class TicTacToe {
 		}
 	}
 	play(token, x, y) {
-		this.message = "";
+		this.gs.message = "";
+		if (((this.x != this.gs.lastX) || (this.y != this.gs.lastY)) && (this.gs.lastX != -1)) {
+				this.gs.message = "Bad square";
+				return;
+		}
 		if (this.winningPlayer !== "" || this.movesLeft === 0) {
 			this.active = false;
-			this.message = "click new game to start again";
+			this.gs.message = "click new game to start again";
 			return;
 		}
 		if (this.grid[x][y] === "-") {
 			this.grid[x][y] = token;
 			this.winningPlayer = this.hasGameEnded();
 			this.movesLeft--;
+			this.gs.logLastMove(x, y);
 			if (this.winningPlayer !== "" || this.movesLeft === 0)
-				this.message = "click new game to start again";
+				this.gs.message = "click new game to start again";
 		} else {
-			this.message = "Bad move. Choose an empty space";
-			this.activePlayer();
+			this.gs.message = "Bad move. Choose an empty space";
+			this.gs.activePlayer();
 		}
 	}
-	activePlayer() {
-		var active = this.activeToken;
-		if (this.activeToken === 'X')
-			this.activeToken = 'O'
-		else
-			this.activeToken = 'X'
-		return active;
-	}
+
 	hasGameEnded() {
-		if (this.checkLine(0, 0, [0, 1], this.size))
+		if (this.checkLine(0, 0, [0, 1], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[0][0]);
 			return this.grid[0][0];
-		else if (this.checkLine(1, 0, [0, 1], this.size))
+		}
+		else if (this.checkLine(1, 0, [0, 1], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[1][0]);
 			return this.grid[1][0];
-		else if (this.checkLine(2, 0, [0, 1], this.size))
+		}
+		else if (this.checkLine(2, 0, [0, 1], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[2][0]);
 			return this.grid[2][0];
-		else if (this.checkLine(0, 0, [1, 0], this.size))
+		}
+		else if (this.checkLine(0, 0, [1, 0], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[0][0]);
 			return this.grid[0][0];
-		else if (this.checkLine(0, 1, [1, 0], this.size))
+		}
+		else if (this.checkLine(0, 1, [1, 0], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[0][1]);
 			return this.grid[0][1];
-		else if (this.checkLine(0, 2, [1, 0], this.size))
+		}
+		else if (this.checkLine(0, 2, [1, 0], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[0][2]);
 			return this.grid[0][2];
-		else if (this.checkLine(0, 0, [1, 1], this.size))
+		}
+		else if (this.checkLine(0, 0, [1, 1], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[0][0]);
 			return this.grid[0][0];
-		else if (this.checkLine(0, 2, [1, -1], this.size))
+		}
+		else if (this.checkLine(0, 2, [1, -1], this.size)) {
+			this.gs.logVictory(this.x, this.y, this.grid[0][2]);
 			return this.grid[0][2];
+		}
 		return "";
 	}
 	checkLine(x, y, vector, size) {
