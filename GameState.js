@@ -21,12 +21,13 @@ export class GameState {
 	logVictory(x, y, piece){
 		this.grid[x][y] = piece;
 	}
-	activePlayer() {
-		var active = this.activeToken;
+	changePlayer() {
 		if (this.activeToken === 'X')
 			this.activeToken = 'O'
 		else
 			this.activeToken = 'X'
-		return active;
+	}
+	getPlayer() {
+		return this.activeToken;
 	}
 }

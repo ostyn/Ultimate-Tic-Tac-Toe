@@ -44,9 +44,9 @@ export class TicTacToe {
 			this.gs.logLastMove(x, y);
 			if (this.winningPlayer !== "" || this.movesLeft === 0)
 				this.gs.message = "click new game to start again";
+			this.gs.changePlayer();
 		} else {
 			this.gs.message = "Bad move. Choose an empty space";
-			this.gs.activePlayer();
 		}
 	}
 
