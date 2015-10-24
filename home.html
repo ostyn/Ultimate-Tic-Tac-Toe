@@ -2,8 +2,13 @@
 	<require from='tictactoe'></require>
 	Home and stuff
 	<a href="#/cards/1">deal a deck</a>
-	<div repeat.for="column of gs.grid" class="column">
-		<ttt repeat.for="cell of column" size=3 x=${$parent.$index} y=${$index}></ttt>
-	</div>
+	<br>
+	<br>
+	${gs.lastX},${gs.lastY}
 	${gs.message}
+	<br>
+	<br>
+	<div repeat.for="column of gs.grid" class="column">
+		<ttt repeat.for="cell of column" size=3 x=${$index} y=${$parent.$index}></ttt>
+	</div>
 </template>

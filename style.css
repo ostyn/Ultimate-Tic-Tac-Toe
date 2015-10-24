@@ -3,10 +3,11 @@
 }
 .column{
 	display: inline-block;
+	margin-bottom: 2px;
 }
 .cell{
 	width: 75px;
 	height: 75px;
-	font-size: 12px;
+	font-size: 30px;
 	background-color: #CCCCCC
 }
