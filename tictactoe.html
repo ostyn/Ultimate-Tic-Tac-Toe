@@ -1,7 +1,10 @@
 <template>
+	<br>
 	<div class="column" repeat.for="column of grid">
 		<div  repeat.for="cell of column">
-			<div class="cell" click.delegate="$parent.$parent.play($parent.$parent.gs.getPlayer(), $parent.$index, $index)">${cell}</div>
+			<button class="cell" click.delegate="$parent.$parent.play($parent.$parent.gs.getPlayer(), $parent.$index, $index)">${cell}</button>
 		</div>
 	</div>
+	<br>
+	${gs.lastX},${gs.lastY}
 </template>
