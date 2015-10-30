@@ -1,5 +1,4 @@
 <template>
-	${x},${y}
 	<div class="column" repeat.for="column of grid">
 		<div  repeat.for="cell of column">
 			<button class="cell" click.delegate="$parent.$parent.play($parent.$parent.gs.getPlayer(), $parent.$index, $index)">${cell}</button>

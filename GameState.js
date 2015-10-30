@@ -20,8 +20,7 @@ export class GameState {
 		if(this.grid[x][y] != "-") {
 			this.lastX = -1;
 			this.lastY = -1;
-		}
-			
+		}	
 	}
 	logVictory(x, y, piece){
 		this.grid[x][y] = piece;
@@ -34,5 +33,8 @@ export class GameState {
 	}
 	getPlayer() {
 		return this.activeToken;
+	}
+	isBoardActive(x, y){
+		return ((x == this.lastX) && (y == this.lastY)) || (this.lastX == -1)
 	}
 }

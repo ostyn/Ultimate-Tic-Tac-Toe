@@ -15,7 +15,6 @@ export class TicTacToe {
 	newGame() {
 		this.gs.message = "";
 		this.grid = [];
-		this.active = true;
 		this.winningPlayer = "";
 		this.movesLeft = this.size*this.size;
 		for (var column = 0; column < this.size; column++) {
@@ -28,12 +27,11 @@ export class TicTacToe {
 	}
 	play(token, x, y) {
 		this.gs.message = "";
-		if (((this.x != this.gs.lastX) || (this.y != this.gs.lastY)) && (this.gs.lastX != -1)) {
+		if (!this.gs.isBoardActive(this.x, this.y)) {
 				this.gs.message = "Bad square";
 				return;
 		}
 		if (this.winningPlayer !== "" || this.movesLeft === 0) {
-			this.active = false;
 			this.gs.message = "click new game to start again";
 			return;
 		}
@@ -51,37 +49,30 @@ export class TicTacToe {
 	}
 
 	hasGameEnded() {
-		if (this.checkLine(0, 0, [0, 1], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[0][0]);
-			return this.grid[0][0];
+		//Columns
+		for(var i = 0; i < this.size; i++) {
+			if (this.checkLine(i, 0, [0, 1], this.size)) {
+				this.gs.logVictory(this.x, this.y, this.grid[i][0]);
+				return this.grid[i][0];
+			}
 		}
-		else if (this.checkLine(1, 0, [0, 1], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[1][0]);
-			return this.grid[1][0];
+		//Rows
+		for(var i = 0; i < this.size; i++) {
+			if (this.checkLine(0, i, [1, 0], this.size)) {
+				this.gs.logVictory(this.x, this.y, this.grid[0][i]);
+				return this.grid[0][i];
+			}
 		}
-		else if (this.checkLine(2, 0, [0, 1], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[2][0]);
-			return this.grid[2][0];
-		}
-		else if (this.checkLine(0, 0, [1, 0], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[0][0]);
-			return this.grid[0][0];
-		}
-		else if (this.checkLine(0, 1, [1, 0], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[0][1]);
-			return this.grid[0][1];
-		}
-		else if (this.checkLine(0, 2, [1, 0], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[0][2]);
-			return this.grid[0][2];
-		}
-		else if (this.checkLine(0, 0, [1, 1], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[0][0]);
-			return this.grid[0][0];
-		}
-		else if (this.checkLine(0, 2, [1, -1], this.size)) {
-			this.gs.logVictory(this.x, this.y, this.grid[0][2]);
-			return this.grid[0][2];
+		//Diagonals
+		if (this.size % 2 === 1) {
+			if (this.checkLine(0, 0, [1, 1], this.size)) {
+				this.gs.logVictory(this.x, this.y, this.grid[0][0]);
+				return this.grid[0][0];
+			}
+			else if (this.checkLine(0, this.size-1, [1, -1], this.size)) {
+				this.gs.logVictory(this.x, this.y, this.grid[0][this.size-1]);
+				return this.grid[0][this.size-1];
+			}
 		}
 		return "";
 	}
