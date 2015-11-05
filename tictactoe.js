@@ -40,11 +40,11 @@ export class TicTacToe {
 		}
 		if (this.grid[x][y] === "-") {
 			this.grid[x].splice(y, 1, token);
-			this.winningPlayer = this.hasGameEnded();
 			this.movesLeft--;
 			this.gs.logLastMove(x, y);
-			if (this.winningPlayer !== "" || this.movesLeft === 0)
-				this.gs.message = "click new game to start again";
+			this.winningPlayer = this.hasGameEnded();
+			//if (this.winningPlayer !== "" || this.movesLeft === 0)
+			//	this.gs.message = "click new game to start again";
 			this.gs.changePlayer();
 		} else {
 			this.gs.message = "Bad move. Choose an empty space";
