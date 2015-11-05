@@ -9,8 +9,8 @@ export class GameState {
 		for (var column = 0; column < this.size; column++) {
 				for (var row = 0; row < this.size; row++) {
 					if (!this.grid[row])
-						this.grid[row] = [];
-					this.grid[row][column] = "-";
+						this.grid.splice(row, 1, []);
+					this.grid[row].splice(column, 1, "-");
 				}
 		}
 	}
@@ -23,7 +23,7 @@ export class GameState {
 		}	
 	}
 	logVictory(x, y, piece){
-		this.grid[x][y] = piece;
+		this.grid[x].splice(y, 1, piece);
 	}
 	changePlayer() {
 		if (this.activeToken === 'X')
@@ -33,8 +33,5 @@ export class GameState {
 	}
 	getPlayer() {
 		return this.activeToken;
-	}
-	isBoardActive(x, y){
-		return ((x == this.lastX) && (y == this.lastY)) || (this.lastX == -1)
 	}
 }

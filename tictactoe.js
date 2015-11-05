@@ -12,6 +12,9 @@ export class TicTacToe {
 	created() {
 		this.newGame();
 	}
+	get isBoardInactive() {
+		return !(((this.x == this.gs.lastX) && (this.y == this.gs.lastY)) || (this.gs.lastX == -1));
+	}
 	newGame() {
 		this.gs.message = "";
 		this.grid = [];
@@ -20,14 +23,14 @@ export class TicTacToe {
 		for (var column = 0; column < this.size; column++) {
 			for (var row = 0; row < this.size; row++) {
 				if (!this.grid[row])
-					this.grid[row] = [];
-				this.grid[row][column] = "-";
+					this.grid.splice(row, 1, []);
+				this.grid[row].splice(column, 1, "-");
 			}
 		}
 	}
 	play(token, x, y) {
 		this.gs.message = "";
-		if (!this.gs.isBoardActive(this.x, this.y)) {
+		if (this.isBoardInactive) {
 				this.gs.message = "Bad square";
 				return;
 		}
@@ -36,7 +39,7 @@ export class TicTacToe {
 			return;
 		}
 		if (this.grid[x][y] === "-") {
-			this.grid[x][y] = token;
+			this.grid[x].splice(y, 1, token);
 			this.winningPlayer = this.hasGameEnded();
 			this.movesLeft--;
 			this.gs.logLastMove(x, y);
