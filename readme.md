@@ -8,5 +8,5 @@ jspm install
 
 gulp express
 
-localhost:4000
+Go to localhost:4000
 ```
