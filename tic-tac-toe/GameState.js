@@ -81,7 +81,7 @@ export class GameState {
 					return "-";
 			}
 		}
-		return "C";
+		return "?";
 	}
 
 	checkLine(x, y, vector, size, grid) {
