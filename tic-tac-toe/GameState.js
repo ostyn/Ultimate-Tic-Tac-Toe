@@ -22,7 +22,7 @@ export class GameState {
 	logLastMove(x, y){
 		this.lastX = x;
 		this.lastY = y;
-		if(this.grid[x][y] != "-") {
+		if(this.grid[x][y] !== "-") {
 			this.lastX = -1;
 			this.lastY = -1;
 		}	

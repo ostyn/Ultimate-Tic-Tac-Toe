@@ -40,10 +40,10 @@ export class TicTacToe {
 		if (this.grid[x][y] === "-") {
 			this.grid[x].splice(y, 1, token);
 			this.movesLeft--;
-			this.gs.logLastMove(x, y);
 			this.winningPlayer = this.gs.hasGameEnded(this.size, this.grid);
 			if(this.winningPlayer !== "-")
 				this.gs.logVictory(this.x, this.y, this.winningPlayer);
+			this.gs.logLastMove(x, y);
 			this.gs.changePlayer();
 		} else {
 			this.gs.message = "Bad move. Choose an empty space";
