@@ -1,13 +1,14 @@
 <template>
 	<div class="boardElement">
 		<div class="board">
-			<div class="column" repeat.for="column of grid">
+			<div class="column" repeat.for="column of currentGS.grid">
 				<div  repeat.for="cell of column">
-					<button class="cell" click.delegate="$parent.$parent.play($parent.$index, $index, $parent.$parent.gs.getPlayer())">${cell}</button>
+					<button class="cell" disabled.bind="$parent.$parent.winningPlayer != '-'" click.delegate="$parent.$parent.play($parent.$index, $index, $parent.$parent.turnObject.getCurrentPlayer())">${cell}</button>
 				</div>
 			</div>
 		</div>
-		<div class="boardOverlay" show.bind="isBoardInactive"></div>
-		<div class="boardOverlay" show.bind="winningPlayer != '-'">${gs.grid[x][y]}</div>
+		<!--<button click.trigger="undo()">Undo</button>-->
+		<!--div class="boardOverlay" show.bind="isBoardInactive"></div>
+		<div class="boardOverlay" show.bind="winningPlayer != '-'">${gs.grid[x][y]}</div-->
 	</div>
 </template>

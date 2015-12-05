@@ -3,7 +3,6 @@
 	${gs.message}
 	<br>
 	<br>
-	<div repeat.for="column of gs.grid" class="column">
-		<ttt repeat.for="cell of column" size=3 x=${$parent.$index} y=${$index}></ttt>
-	</div>
+	<ttt size=3 x=0 y=0 registerundo.call="registerUndo()" onplay.call="onPlay()"></ttt>
+	<button click.trigger="undo()" disabled.bind="!stack.length">Undo</button>
 </template>

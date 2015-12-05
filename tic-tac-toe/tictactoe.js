@@ -1,52 +1,108 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
-import {GameState} from 'tic-tac-toe/GameState'
-@inject(GameState)
+import {GS} from 'tic-tac-toe/GS'
+import {TurnObject} from 'tic-tac-toe/TurnObject'
+import {TicTacToeHooks} from 'tic-tac-toe/TicTacToeHooks'
 @customElement('ttt')
+@inject(TurnObject, TicTacToeHooks)
 export class TicTacToe {
 	@bindable size;
 	@bindable x;
 	@bindable y;
-	constructor(gs) {
-		this.gs = gs;
+	constructor(turnObject, ticTacToeHooks) {
+		this.turnObject = turnObject;
+		this.ticTacToeHooks = ticTacToeHooks;
+		this.winningPlayer = "-";
+	}
+	attached(){
+		this.ticTacToeHooks.registerUndoCallback(this.x, this.y, this.undo);
 	}
 	created() {
 		this.newGame();
 	}
-	get isBoardInactive() {
-		return !(((this.x == this.gs.lastX) && (this.y == this.gs.lastY)) || (this.gs.lastX == -1));
-	}
 	newGame() {
-		this.grid = [];
-		this.winningPlayer = "-";
-		this.movesLeft = this.size*this.size;
-		for (var column = 0; column < this.size; column++) {
-			for (var row = 0; row < this.size; row++) {
-				if (!this.grid[row])
-					this.grid.splice(row, 1, []);
-				this.grid[row].splice(column, 1, "-");
-			}
-		}
+		this.stack = [];
+		this.currentGS = new GS();
 	}
 	play(x, y, token) {
-		this.gs.message = "";
 		if (this.isBoardInactive) {
 				this.gs.message = "Bad square";
 				return;
 		}
-		if (this.winningPlayer !== "-" || this.movesLeft === 0) {
-			this.gs.message = "click new game to start again";
-			return;
-		}
-		if (this.grid[x][y] === "-") {
-			this.grid[x].splice(y, 1, token);
-			this.movesLeft--;
-			this.winningPlayer = this.gs.hasGameEnded(this.size, this.grid);
-			if(this.winningPlayer !== "-")
-				this.gs.logVictory(this.x, this.y, this.winningPlayer);
-			this.gs.logLastMove(x, y);
-			this.gs.changePlayer();
+		if (this.currentGS.grid[x][y] === "-") {
+			this.stack.push(this.currentGS);
+			this.currentGS = new GS(this.currentGS);
+			this.currentGS.grid[x].splice(y, 1, token);
+			this.currentGS.setLastMove(x, y, token);
+			this.ticTacToeHooks.callOnMove(this.x, this.y);
+			this.winningPlayer = this.hasGameEnded(this.size, this.currentGS.grid);
+			if(this.winningPlayer !== "-") {
+				this.ticTacToeHooks.callOnVictory(this.x, this.y, this.winningPlayer);
+			}
+			this.turnObject.advancePlayerTurn();
 		} else {
-			this.gs.message = "Bad move. Choose an empty space";
+			//this.gs.message = "Bad move. Choose an empty space";
 		}
+	}
+	undo = () => {
+		if(this.stack.length > 0) {
+			this.turnObject.reversePlayerTurn();
+			this.currentGS = this.stack.pop();
+			this.winningPlayer = this.hasGameEnded(this.size, this.currentGS.grid);
+		}
+	}
+	hasGameEnded(size, grid) {
+		//Columns
+		for(var i = 0; i < size; i++) {
+			var check = this.checkLine(i, 0, [0, 1], size, grid);
+			if (check !== "-") {
+				return check;
+			}
+		}
+		//Rows
+		for(var i = 0; i < size; i++) {
+			var check = this.checkLine(0, i, [1, 0], size, grid);
+			if (check !== "-") {
+				return check;
+			}
+		}
+		//Diagonals
+		if (size % 2 === 1) {
+			var diagonal1 = this.checkLine(0, 0, [1, 1], size, grid);
+			var diagonal2 = this.checkLine(0, size-1, [1, -1], size, grid);
+			if (diagonal1 !== "-") {
+				return diagonal1;
+			}
+			else if (diagonal2 !== "-") {
+				return diagonal2;
+			}
+		}
+		for (var x = 0; x < size; x++) {
+			for (var y = 0; y < size; y++) {
+				if (grid[x][y] === "-")
+					return "-";
+			}
+		}
+		return "?";
+	}
+
+	checkLine(x, y, vector, size, grid) {
+		var values = {};
+		values[grid[x][y]] = grid[x][y];
+		for (var i = 0; i < size - 1; i++) {
+			x = x + vector[0];
+			y = y + vector[1];
+			values[grid[x][y]] = grid[x][y];
+		}
+		//weeds out cases with empty spaces
+		if (values["-"])
+			return "-";
+		//No empties, no O's
+		else if  (values["X"] && !values["O"])
+			return "X";
+		//No empties, no X's
+		else if (values["O"] && !values["X"])
+			return "O";
+		//all cats
+		return "-";
 	}
 }

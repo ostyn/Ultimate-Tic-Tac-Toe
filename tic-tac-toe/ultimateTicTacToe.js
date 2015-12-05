@@ -1,11 +1,21 @@
 import {inject} from 'aurelia-framework';
-import {GameState} from 'tic-tac-toe/GameState'
-@inject(GameState)
+import {TicTacToeHooks} from 'tic-tac-toe/TicTacToeHooks'
+@inject(TicTacToeHooks)
 export class UltimateTicTacToe {
-	constructor(gs) {
-		this.gs = gs;
+	constructor(ticTacToeHooks) {
+		this.ticTacToeHooks = ticTacToeHooks;
+		this.stack = [];
+		this.ticTacToeHooks.registerOnMoveCallback(this.onPlay);
+		//this.ticTacToeHooks.registerOnVictoryCallback
 	}
-	activate(){
-		this.gs.reset();
+	onPlay = (x, y) => {
+		this.stack.push({"x":x, "y":y});
+	}
+
+	undo() {
+		if(this.stack.length > 0) {
+			var coords = this.stack.pop();
+			this.ticTacToeHooks.callUndo(coords.x, coords.y);
+		}
 	}
 }
