@@ -8,6 +8,7 @@ export class TicTacToe {
 	@bindable size;
 	@bindable x;
 	@bindable y;
+	@bindable showUndo;
 	constructor(turnObject, ticTacToeHooks) {
 		this.turnObject = turnObject;
 		this.ticTacToeHooks = ticTacToeHooks;

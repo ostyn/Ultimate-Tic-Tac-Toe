@@ -7,7 +7,7 @@
 				</div>
 			</div>
 		</div>
-		<!--<button click.trigger="undo()">Undo</button>-->
+		<button if.bind="showUndo" disabled.bind="!stack.length" click.trigger="undo()">Undo</button>
 		<!--div class="boardOverlay" show.bind="isBoardInactive"></div>
 		<div class="boardOverlay" show.bind="winningPlayer != '-'">${gs.grid[x][y]}</div-->
 	</div>
