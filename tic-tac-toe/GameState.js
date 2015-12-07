@@ -30,7 +30,7 @@ export class GameState {
 	}
 	logVictory(x, y, piece){
 		this.grid[x].splice(y, 1, piece);
-		var potentialWinner = this.hasGameEnded(this.size, this.grid);
+		var potentialWinner = "-";// = this.hasGameEnded(this.size, this.grid);
 		if (potentialWinner !== "-") {
 			this.gameOver = true;
 			this.lastX = this.size+1;

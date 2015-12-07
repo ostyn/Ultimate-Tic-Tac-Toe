@@ -16,11 +16,13 @@ export class TicTacToe {
 	}
 	attached(){
 		this.ticTacToeHooks.registerUndoCallback(this.x, this.y, this.undo);
+		this.ticTacToeHooks.registerSetActiveCallback(this.x, this.y, this.setActive);
 	}
 	created() {
 		this.newGame();
 	}
 	newGame() {
+		this.active = true;
 		this.stack = [];
 		this.currentGS = new GS();
 	}
@@ -34,10 +36,12 @@ export class TicTacToe {
 			this.currentGS = new GS(this.currentGS);
 			this.currentGS.grid[x].splice(y, 1, token);
 			this.currentGS.setLastMove(x, y, token);
-			this.ticTacToeHooks.callOnMove(this.x, this.y);
 			this.winningPlayer = this.hasGameEnded(this.size, this.currentGS.grid);
 			if(this.winningPlayer !== "-") {
-				this.ticTacToeHooks.callOnVictory(this.x, this.y, this.winningPlayer);
+				this.ticTacToeHooks.callOnMove(this.x, this.y, x, y, token, true);
+			}
+			else {
+				this.ticTacToeHooks.callOnMove(this.x, this.y, x, y, token, false);
 			}
 			this.turnObject.advancePlayerTurn();
 		} else {
@@ -50,6 +54,9 @@ export class TicTacToe {
 			this.currentGS = this.stack.pop();
 			this.winningPlayer = this.hasGameEnded(this.size, this.currentGS.grid);
 		}
+	}
+	setActive = (active) => {
+		this.active = active;
 	}
 	hasGameEnded(size, grid) {
 		//Columns

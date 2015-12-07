@@ -2,35 +2,42 @@ export class TicTacToeHooks {
 	constructor(){
 		//will be called on a move
 		this.onMoveCallbacks = [];
-		//will be called on a victory
-		this.onVictoryCallbacks = [];
 		//can be called to undo any of the boards
 		this.undoCallbacks = {};
+		//can be called to toggle active-ness of any of the boards
+		this.setActiveCallbacks = {};
 	}
 
 	registerOnMoveCallback(callback) {
 		this.onMoveCallbacks.push(callback);
 	}
 
-	registerOnVictoryCallback(callback) {
-		this.onVictoryCallbacks.push(callback);
-	}
-
 	registerUndoCallback(boardX, boardY, callback) {
 		this.undoCallbacks[boardX + ":" + boardY] = callback;
+	}
+
+	registerSetActiveCallback(boardX, boardY, callback) {
+		this.setActiveCallbacks[boardX + ":" + boardY] = callback;
 	}
 
 	callUndo(boardX, boardY){
 		this.undoCallbacks[boardX + ":" + boardY]();
 	}
 
-	callOnMove(boardX, boardY) {
-		for(var x in this.onMoveCallbacks) 
-			this.onMoveCallbacks[x](boardX, boardY);
+	callSetActive(boardX, boardY, enable){
+		this.setActiveCallbacks[boardX + ":" + boardY](enable);
 	}
 
-	callOnVictory(boardX, boardY, token){
-		for(var x in this.onVictoryCallbacks) 
-			this.onVictoryCallbacks[x](boardX, boardY, token);
+	activateAll(){
+		Object.keys(this.setActiveCallbacks).forEach( key => {this.setActiveCallbacks[key](true)});
+	}
+
+	deactivateAll(){
+		Object.keys(this.setActiveCallbacks).forEach( key => {this.setActiveCallbacks[key](false)});
+	}
+
+	callOnMove(boardX, boardY, x, y, token, victory) {
+		for(var index in this.onMoveCallbacks) 
+			this.onMoveCallbacks[index](boardX, boardY, x, y, token, victory);
 	}
 }
