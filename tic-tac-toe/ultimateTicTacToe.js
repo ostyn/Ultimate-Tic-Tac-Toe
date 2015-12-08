@@ -10,9 +10,9 @@ export class UltimateTicTacToe {
 		this.ticTacToeHooks.registerOnMoveCallback(this.onPlay);
 	}
 	onPlay = (boardX, boardY, playX, playY, token, victory) => {
-		this.stack.push({"x":boardX, "y":boardY});
+		this.stack.push({"x":boardX, "y":boardY, "victory" : victory});
 		if(victory)
-			this.gs.logVictory(boardX, boardY, token);
+			this.gs.logBoard(boardX, boardY, token);
 		if(this.gs.grid[playX][playY] === "-") {
 			this.ticTacToeHooks.deactivateAll();
 			this.ticTacToeHooks.callSetActive(playX, playY, true);
@@ -25,14 +25,16 @@ export class UltimateTicTacToe {
 
 	undo() {
 		if(this.stack.length > 0) {
-			var coords = this.stack.pop();
-			this.ticTacToeHooks.callUndo(coords.x, coords.y);
+			var move = this.stack.pop();
+			this.ticTacToeHooks.callUndo(move.x, move.y);
+			if(move.victory)
+				this.gs.logBoard(move.x, move.y, "-");
 			if(this.stack.length === 0) {
 				this.ticTacToeHooks.activateAll();
 			}
 			else {
 				this.ticTacToeHooks.deactivateAll();
-				this.ticTacToeHooks.callSetActive(coords.x, coords.y, true);
+				this.ticTacToeHooks.callSetActive(move.x, move.y, true);
 			}
 		}
 	}
