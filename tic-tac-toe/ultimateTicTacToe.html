@@ -1,10 +1,10 @@
 <template>
 	<require from='tic-tac-toe/tictactoe'></require>
-	${gs.message}
+	${message}
 	<br>
 	<br>
-	<div repeat.for="column of gs.grid" class="column">
+	<div repeat.for="column of grid" class="column">
 		<ttt repeat.for="cell of column" size=3 x=${$parent.$index} y=${$index}></ttt>
 	</div>
-	<button click.trigger="undo()" disabled.bind="!stack.length">Undo</button>
+	<button click.trigger="undo()" disabled.bind="!moveUndoStack.length">Undo</button>
 </template>

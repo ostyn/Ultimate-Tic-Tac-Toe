@@ -1,5 +1,5 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
-import {GS} from 'tic-tac-toe/GS'
+import {GameState} from 'tic-tac-toe/GameState'
 import {TurnObject} from 'tic-tac-toe/TurnObject'
 import {TicTacToeHooks} from 'tic-tac-toe/TicTacToeHooks'
 @customElement('ttt')
@@ -24,7 +24,7 @@ export class TicTacToe {
 	newGame() {
 		this.active = true;
 		this.stack = [];
-		this.currentGS = new GS();
+		this.currentGS = new GameState();
 	}
 	play(x, y, token) {
 		if (this.isBoardInactive) {
@@ -33,7 +33,7 @@ export class TicTacToe {
 		}
 		if (this.currentGS.grid[x][y] === "-") {
 			this.stack.push(this.currentGS);
-			this.currentGS = new GS(this.currentGS);
+			this.currentGS = new GameState(this.currentGS);
 			this.currentGS.grid[x].splice(y, 1, token);
 			this.currentGS.setLastMove(x, y, token);
 			this.winningPlayer = this.hasGameEnded(this.size, this.currentGS.grid);
