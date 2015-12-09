@@ -16,13 +16,7 @@ export class UltimateTicTacToe {
 		this.grid = [];
 		this.gameOver = false;
 		this.message = "";
-		for (var column = 0; column < this.size; column++) {
-				for (var row = 0; row < this.size; row++) {
-					if (!this.grid[row])
-						this.grid.splice(row, 1, []);
-					this.grid[row].splice(column, 1, "-");
-				}
-		}	
+		this.grid = TicTacToeLogic.generateBoard(this.size);
 	}
 
 	logBoard(x, y, piece){

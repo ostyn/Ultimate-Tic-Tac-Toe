@@ -16,16 +16,14 @@ export class TicTacToe {
 		this.winningPlayer = "-";
 	}
 	attached(){
+		this.newGame();
 		this.ticTacToeHooks.registerUndoCallback(this.x, this.y, this.undo);
 		this.ticTacToeHooks.registerSetActiveCallback(this.x, this.y, this.setActive);
-	}
-	created() {
-		this.newGame();
 	}
 	newGame() {
 		this.active = true;
 		this.stack = [];
-		this.currentGS = new GameState();
+		this.currentGS = new GameState(this.size);
 	}
 	play(x, y, token) {
 		if (this.isBoardInactive) {
@@ -34,7 +32,7 @@ export class TicTacToe {
 		}
 		if (this.currentGS.grid[x][y] === "-") {
 			this.stack.push(this.currentGS);
-			this.currentGS = new GameState(this.currentGS);
+			this.currentGS = new GameState(this.size, this.currentGS);
 			this.currentGS.grid[x].splice(y, 1, token);
 			this.currentGS.setLastMove(x, y, token);
 			this.winningPlayer = TicTacToeLogic.hasGameEnded(this.size, this.currentGS.grid);

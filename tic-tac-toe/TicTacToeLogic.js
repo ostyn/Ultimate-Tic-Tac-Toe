@@ -1,4 +1,16 @@
 export class TicTacToeLogic {
+	static generateBoard(size){
+		var grid = [];
+		for (var column = 0; column < size; column++) {
+			for (var row = 0; row < size; row++) {
+				if (!grid[row])
+					grid.splice(row, 1, []);
+				grid[row].splice(column, 1, "-");
+			}
+		}	
+		return grid;
+	}
+
 	static hasGameEnded(size, grid) {
 		//Columns
 		for(var i = 0; i < size; i++) {

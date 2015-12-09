@@ -37,7 +37,6 @@ export class TicTacToeHooks {
 	}
 
 	callOnMove(boardX, boardY, x, y, token, victory) {
-		for(var index in this.onMoveCallbacks) 
-			this.onMoveCallbacks[index](boardX, boardY, x, y, token, victory);
+		this.onMoveCallbacks.forEach( callback => {callback(boardX, boardY, x, y, token, victory)});
 	}
 }

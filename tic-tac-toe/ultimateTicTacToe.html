@@ -4,7 +4,7 @@
 	<br>
 	<br>
 	<div repeat.for="column of grid" class="column">
-		<ttt repeat.for="cell of column" size=3 x=${$parent.$index} y=${$index}></ttt>
+		<ttt repeat.for="cell of column" size.bind="$parent.$parent.size"" x=${$parent.$index} y=${$index}></ttt>
 	</div>
 	<button click.trigger="undo()" disabled.bind="!moveUndoStack.length">Undo</button>
 </template>
