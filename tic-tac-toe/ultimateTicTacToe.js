@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {TicTacToeHooks} from 'tic-tac-toe/TicTacToeHooks'
+import {TicTacToeLogic} from 'tic-tac-toe/TicTacToeLogic'
 
 @inject(TicTacToeHooks)
 export class UltimateTicTacToe {
@@ -26,17 +27,21 @@ export class UltimateTicTacToe {
 
 	logBoard(x, y, piece){
 		this.grid[x].splice(y, 1, piece);
-		var potentialWinner = "-";// = this.hasGameEnded(this.size, this.grid);
+		var potentialWinner  = TicTacToeLogic.hasGameEnded(this.size, this.grid);
 		if (potentialWinner !== "-") {
+			this.moveUndoStack = [];
 			this.gameOver = true;
+			this.ticTacToeHooks.deactivateAll();
 			this.message = "The game is over and " + potentialWinner + " won!";
 		}
 	}
 
 	onPlay = (boardX, boardY, playX, playY, token, victory) => {
 		this.moveUndoStack.push({"x":boardX, "y":boardY, "victory" : victory});
-		if(victory)
+		if(victory) 
 			this.logBoard(boardX, boardY, token);
+		if(this.gameOver)
+			return;
 		if(this.grid[playX][playY] === "-") {
 			this.ticTacToeHooks.deactivateAll();
 			this.ticTacToeHooks.callSetActive(playX, playY, true);
@@ -49,6 +54,8 @@ export class UltimateTicTacToe {
 
 	undo() {
 		if(this.moveUndoStack.length > 0) {
+			this.message = "";
+			this.gameOver = false;
 			var move = this.moveUndoStack.pop();
 			this.ticTacToeHooks.callUndo(move.x, move.y);
 			if(move.victory)
