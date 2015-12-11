@@ -1,19 +1,23 @@
-import {inject} from 'aurelia-framework';
+import {customElement, inject, bindable} from 'aurelia-framework';
 import {TicTacToeHooks} from 'tic-tac-toe/TicTacToeHooks'
 import {TicTacToeLogic} from 'tic-tac-toe/TicTacToeLogic'
 
+@customElement('uttt')
 @inject(TicTacToeHooks)
 export class UltimateTicTacToe {
+	@bindable size = 3;
+	@bindable showUndo = false;
+	@bindable showNewGame = false;
 	constructor(ticTacToeHooks) {
 		this.ticTacToeHooks = ticTacToeHooks;
 		this.moveUndoStack = [];
 		this.ticTacToeHooks.registerOnMoveCallback(this.onPlay);
-		this.reset();
+		this.newGame();
 	}
 
-	reset() {
-		this.size = 3;
+	newGame() {
 		this.grid = [];
+		this.moveUndoStack = [];
 		this.gameOver = false;
 		this.message = "";
 		this.grid = TicTacToeLogic.generateBoard(this.size);

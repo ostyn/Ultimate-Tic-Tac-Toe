@@ -26,16 +26,13 @@ export class TicTacToeLogic {
 				return check;
 			}
 		}
-		//Diagonals
-		if (size % 2 === 1) {
-			var diagonal1 = TicTacToeLogic.checkLine(0, 0, [1, 1], size, grid);
-			var diagonal2 = TicTacToeLogic.checkLine(0, size-1, [1, -1], size, grid);
-			if (diagonal1 !== "-") {
-				return diagonal1;
-			}
-			else if (diagonal2 !== "-") {
-				return diagonal2;
-			}
+		var diagonal1 = TicTacToeLogic.checkLine(0, 0, [1, 1], size, grid);
+		var diagonal2 = TicTacToeLogic.checkLine(0, size-1, [1, -1], size, grid);
+		if (diagonal1 !== "-") {
+			return diagonal1;
+		}
+		else if (diagonal2 !== "-") {
+			return diagonal2;
 		}
 		for (var x = 0; x < size; x++) {
 			for (var y = 0; y < size; y++) {

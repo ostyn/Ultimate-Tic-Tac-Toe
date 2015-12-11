@@ -6,10 +6,11 @@ import {TicTacToeLogic} from 'tic-tac-toe/TicTacToeLogic'
 @customElement('ttt')
 @inject(TurnObject, TicTacToeHooks)
 export class TicTacToe {
-	@bindable size;
+	@bindable size = 3;
 	@bindable x;
 	@bindable y;
-	@bindable showUndo;
+	@bindable showUndo = false;
+	@bindable showNewGame = false;
 	constructor(turnObject, ticTacToeHooks) {
 		this.turnObject = turnObject;
 		this.ticTacToeHooks = ticTacToeHooks;

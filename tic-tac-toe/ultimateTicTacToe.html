@@ -4,7 +4,8 @@
 	<br>
 	<br>
 	<div repeat.for="column of grid" class="column">
-		<ttt repeat.for="cell of column" size.bind="$parent.$parent.size"" x=${$parent.$index} y=${$index}></ttt>
+		<ttt repeat.for="cell of column" size.bind="$parent.$parent.size" x=${$parent.$index} y=${$index}></ttt>
 	</div>
-	<button click.trigger="undo()" disabled.bind="!moveUndoStack.length">Undo</button>
+	<button if.bind="showUndo"  click.trigger="undo()" disabled.bind="!moveUndoStack.length">Undo</button>
+	<button if.bind="showNewGame"  click.trigger="newGame()">New Game</button>
 </template>

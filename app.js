@@ -9,7 +9,7 @@ export class App {
 		config.map([
 		  { route: ['','home'], name: 'home', moduleId: 'home/Home', nav: true, title:'Home' },
 		  { route: ['cards/:id'], name: 'cards', moduleId: 'cards/Cards', nav: false, title:'cards' },
-		  { route: ['ultimateTTT'], name: 'ultimateTicTacToe', moduleId: 'tic-tac-toe/UltimateTicTacToe', nav: true, title:'Ultimate Tic-Tac-Toe' },
+		  { route: ['tic-tac-toe'], name: 'tic-tac-toe-test', moduleId: 'tic-tac-toe/TicTacToeTest', nav: true, title:'Tic-Tac-Toe Test' },
 		]);
 
 		this.router = router;

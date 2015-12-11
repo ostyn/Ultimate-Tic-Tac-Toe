@@ -8,6 +8,7 @@
 			</div>
 		</div>
 		<button if.bind="showUndo" disabled.bind="!stack.length" click.trigger="undo()">Undo</button>
+		<button if.bind="showNewGame" click.trigger="newGame()">New Game</button>
 		<div class="boardOverlay" show.bind="!active"></div>
 		<div class="boardOverlay" show.bind="winningPlayer != '-'">${winningPlayer}</div>
 	</div>
