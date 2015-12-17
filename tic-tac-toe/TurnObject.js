@@ -1,6 +1,6 @@
 export class TurnObject {
 	constructor(){
-		this.tokens = ["X", "O"];
+		this.reset();
 	}
 	advancePlayerTurn(){
 		this.tokens.push(this.tokens.shift());
@@ -10,6 +10,9 @@ export class TurnObject {
 	}
 	getCurrentPlayer(){
 		return this.tokens[0];
+	}
+	reset() {
+		this.tokens = ["X", "O"];
 	}
 	
 }

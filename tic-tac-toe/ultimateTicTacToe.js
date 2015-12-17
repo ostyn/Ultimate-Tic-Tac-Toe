@@ -1,15 +1,16 @@
-import {customElement, inject, bindable} from 'aurelia-framework';
+import {customElement, bindable} from 'aurelia-framework';
 import {TicTacToeHooks} from 'tic-tac-toe/TicTacToeHooks'
+import {TurnObject} from 'tic-tac-toe/TurnObject'
 import {TicTacToeLogic} from 'tic-tac-toe/TicTacToeLogic'
 
 @customElement('uttt')
-@inject(TicTacToeHooks)
 export class UltimateTicTacToe {
 	@bindable size = 3;
-	@bindable showUndo = false;
-	@bindable showNewGame = false;
+	@bindable showUndo = true;
+	@bindable showNewGame = true;
+	@bindable ticTacToeHooks = new TicTacToeHooks();
+	@bindable turnObject = new TurnObject();
 	constructor(ticTacToeHooks) {
-		this.ticTacToeHooks = ticTacToeHooks;
 		this.moveUndoStack = [];
 		this.ticTacToeHooks.registerOnMoveCallback(this.onPlay);
 		this.newGame();

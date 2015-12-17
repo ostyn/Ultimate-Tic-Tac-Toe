@@ -1,20 +1,19 @@
-import {customElement, bindable, inject} from 'aurelia-framework';
+import {customElement, bindable} from 'aurelia-framework';
 import {GameState} from 'tic-tac-toe/GameState'
 import {TurnObject} from 'tic-tac-toe/TurnObject'
 import {TicTacToeHooks} from 'tic-tac-toe/TicTacToeHooks'
 import {TicTacToeLogic} from 'tic-tac-toe/TicTacToeLogic'
 @customElement('ttt')
-@inject(TurnObject, TicTacToeHooks)
 export class TicTacToe {
 	@bindable size = 3;
 	@bindable x;
 	@bindable y;
 	@bindable showUndo = false;
 	@bindable showNewGame = false;
-	constructor(turnObject, ticTacToeHooks) {
-		this.turnObject = turnObject;
-		this.ticTacToeHooks = ticTacToeHooks;
-		this.winningPlayer = "-";
+	@bindable showMessage = false;
+	@bindable ticTacToeHooks = new TicTacToeHooks();
+	@bindable turnObject = new TurnObject();
+	constructor() {
 	}
 	attached(){
 		this.newGame();
@@ -23,8 +22,11 @@ export class TicTacToe {
 	}
 	newGame() {
 		this.active = true;
+		this.message = "New Game";
+		this.winningPlayer = "-";
 		this.stack = [];
 		this.currentGS = new GameState(this.size);
+		this.turnObject.reset();
 	}
 	play(x, y, token) {
 		if (this.isBoardInactive) {
@@ -39,6 +41,7 @@ export class TicTacToe {
 			this.winningPlayer = TicTacToeLogic.hasGameEnded(this.size, this.currentGS.grid);
 			if(this.winningPlayer !== "-") {
 				this.ticTacToeHooks.callOnMove(this.x, this.y, x, y, token, true);
+				this.message = `${this.winningPlayer} has won`;
 			}
 			else {
 				this.ticTacToeHooks.callOnMove(this.x, this.y, x, y, token, false);
@@ -53,6 +56,7 @@ export class TicTacToe {
 			this.turnObject.reversePlayerTurn();
 			this.currentGS = this.stack.pop();
 			this.winningPlayer = TicTacToeLogic.hasGameEnded(this.size, this.currentGS.grid);
+			this.message = "last action reversed";
 		}
 	}
 	setActive = (active) => {
