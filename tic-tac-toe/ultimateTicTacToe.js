@@ -8,11 +8,13 @@ export class UltimateTicTacToe {
 	@bindable size = 3;
 	@bindable showUndo = true;
 	@bindable showNewGame = true;
+	@bindable showMessage = true;
 	@bindable ticTacToeHooks = new TicTacToeHooks();
 	@bindable turnObject = new TurnObject();
 	constructor(ticTacToeHooks) {
 		this.moveUndoStack = [];
-		this.ticTacToeHooks.registerOnMoveCallback(this.onPlay);
+		this.ticTacToeHooks.registerOnMoveCallback(this.onMove);
+		this.ticTacToeHooks.registerOnMessageCallback(this.setMessage);
 		this.newGame();
 	}
 
@@ -35,7 +37,7 @@ export class UltimateTicTacToe {
 		}
 	}
 
-	onPlay = (boardX, boardY, playX, playY, token, victory) => {
+	onMove = (boardX, boardY, playX, playY, token, victory) => {
 		this.moveUndoStack.push({"x":boardX, "y":boardY, "victory" : victory});
 		if(victory) 
 			this.logBoard(boardX, boardY, token);
@@ -48,8 +50,11 @@ export class UltimateTicTacToe {
 		else {
 			this.ticTacToeHooks.activateAll();
 		}
-		
 	}
+
+    setMessage = (message) => {
+        this.message = message;
+    }
 
 	undo() {
 		if(this.moveUndoStack.length > 0) {

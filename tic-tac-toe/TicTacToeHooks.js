@@ -2,6 +2,8 @@ export class TicTacToeHooks {
 	constructor(){
 		//will be called on a move
 		this.onMoveCallbacks = [];
+        //will be called on a message
+        this.onMessageCallbacks = [];
 		//can be called to undo any of the boards
 		this.undoCallbacks = {};
 		//can be called to toggle active-ness of any of the boards
@@ -10,6 +12,10 @@ export class TicTacToeHooks {
 
 	registerOnMoveCallback(callback) {
 		this.onMoveCallbacks.push(callback);
+	}
+
+	registerOnMessageCallback(callback) {
+		this.onMessageCallbacks.push(callback);
 	}
 
 	registerUndoCallback(boardX, boardY, callback) {
@@ -38,5 +44,9 @@ export class TicTacToeHooks {
 
 	callOnMove(boardX, boardY, x, y, token, victory) {
 		this.onMoveCallbacks.forEach( callback => {callback(boardX, boardY, x, y, token, victory)});
+	}
+
+	callOnMessage(message) {
+		this.onMessageCallbacks.forEach( callback => {callback(message)});
 	}
 }

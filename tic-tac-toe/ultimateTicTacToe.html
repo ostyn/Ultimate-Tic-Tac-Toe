@@ -1,12 +1,11 @@
 <template>
 	<require from='tic-tac-toe/tictactoe'></require>
-	${message}
-	<br>
+	<div if.bind="showMessage">${message}</div>
+	<button if.bind="showUndo"  click.trigger="undo()" disabled.bind="!moveUndoStack.length">Undo</button>
+	<button if.bind="showNewGame"  click.trigger="newGame()">New Game</button>
 	<br>
 	<div repeat.for="column of grid" class="column">
 		<ttt repeat.for="cell of column" size.bind="$parent.$parent.size" x=${$parent.$index} y=${$index} 
 				tic-tac-toe-hooks.bind="$parent.$parent.ticTacToeHooks" turn-object.bind="$parent.$parent.turnObject"></ttt>
 	</div>
-	<button if.bind="showUndo"  click.trigger="undo()" disabled.bind="!moveUndoStack.length">Undo</button>
-	<button if.bind="showNewGame"  click.trigger="newGame()">New Game</button>
 </template>

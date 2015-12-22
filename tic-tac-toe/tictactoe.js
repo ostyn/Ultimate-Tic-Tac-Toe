@@ -22,16 +22,15 @@ export class TicTacToe {
 	}
 	newGame() {
 		this.active = true;
-		this.message = "New Game";
+		this.setMessage("New Game");
 		this.winningPlayer = "-";
 		this.stack = [];
 		this.currentGS = new GameState(this.size);
 		this.turnObject.reset();
 	}
-	play(x, y, token) {
+	move(x, y, token) {
 		if (this.isBoardInactive) {
-				this.gs.message = "Bad square";
-				return;
+			return;
 		}
 		if (this.currentGS.grid[x][y] === "-") {
 			this.stack.push(this.currentGS);
@@ -41,22 +40,24 @@ export class TicTacToe {
 			this.winningPlayer = TicTacToeLogic.hasGameEnded(this.size, this.currentGS.grid);
 			if(this.winningPlayer !== "-") {
 				this.ticTacToeHooks.callOnMove(this.x, this.y, x, y, token, true);
-				this.message = `${this.winningPlayer} has won`;
+				this.setMessage(`${this.winningPlayer} has won`);
 			}
 			else {
 				this.ticTacToeHooks.callOnMove(this.x, this.y, x, y, token, false);
 			}
 			this.turnObject.advancePlayerTurn();
-		} else {
-			//this.gs.message = "Bad move. Choose an empty space";
 		}
 	}
+    setMessage(message) {
+        this.message = message;
+        this.ticTacToeHooks.callOnMessage(message);
+    }
 	undo = () => {
 		if(this.stack.length > 0) {
 			this.turnObject.reversePlayerTurn();
 			this.currentGS = this.stack.pop();
 			this.winningPlayer = TicTacToeLogic.hasGameEnded(this.size, this.currentGS.grid);
-			this.message = "last action reversed";
+			this.setMessage("last action reversed");
 		}
 	}
 	setActive = (active) => {
