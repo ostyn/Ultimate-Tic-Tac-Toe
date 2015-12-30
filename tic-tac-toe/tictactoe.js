@@ -14,11 +14,15 @@ export class TicTacToe {
 	@bindable ticTacToeHooks = new TicTacToeHooks();
 	@bindable turnObject = new TurnObject();
 	constructor() {
+		this.firstAttach = true;
 	}
 	attached(){
-		this.newGame();
-		this.ticTacToeHooks.registerUndoCallback(this.x, this.y, this.undo);
-		this.ticTacToeHooks.registerSetActiveCallback(this.x, this.y, this.setActive);
+		if(this.firstAttach) {
+			this.firstAttach = false;
+			this.newGame();
+			this.ticTacToeHooks.registerUndoCallback(this.x, this.y, this.undo);
+			this.ticTacToeHooks.registerSetActiveCallback(this.x, this.y, this.setActive);
+		}
 	}
 	newGame() {
 		this.active = true;
