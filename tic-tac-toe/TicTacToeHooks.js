@@ -2,8 +2,8 @@ export class TicTacToeHooks {
 	constructor(){
 		//will be called on a move
 		this.onMoveCallbacks = [];
-        //will be called on a message
-        this.onMessageCallbacks = [];
+		//will be called on a message
+		this.onMessageCallbacks = [];
 		//can be called to undo any of the boards
 		this.undoCallbacks = {};
 		//can be called to toggle active-ness of any of the boards

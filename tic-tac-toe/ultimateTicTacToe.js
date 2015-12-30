@@ -52,9 +52,9 @@ export class UltimateTicTacToe {
 		}
 	}
 
-    setMessage = (message) => {
-        this.message = message;
-    }
+	setMessage = (message) => {
+		this.message = message;
+	}
 
 	undo() {
 		if(this.moveUndoStack.length > 0) {

@@ -16,6 +16,7 @@ export class TicTacToe {
 	constructor() {
 		this.firstAttach = true;
 	}
+
 	attached(){
 		if(this.firstAttach) {
 			this.firstAttach = false;
@@ -24,6 +25,7 @@ export class TicTacToe {
 			this.ticTacToeHooks.registerSetActiveCallback(this.x, this.y, this.setActive);
 		}
 	}
+
 	newGame() {
 		this.active = true;
 		this.setMessage("New Game");
@@ -32,6 +34,7 @@ export class TicTacToe {
 		this.currentGS = new GameState(this.size);
 		this.turnObject.reset();
 	}
+
 	move(x, y, token) {
 		if (this.isBoardInactive) {
 			return;
@@ -52,10 +55,12 @@ export class TicTacToe {
 			this.turnObject.advancePlayerTurn();
 		}
 	}
-    setMessage(message) {
-        this.message = message;
-        this.ticTacToeHooks.callOnMessage(message);
-    }
+
+	setMessage(message) {
+		this.message = message;
+		this.ticTacToeHooks.callOnMessage(message);
+	}
+
 	undo = () => {
 		if(this.stack.length > 0) {
 			this.turnObject.reversePlayerTurn();
@@ -64,6 +69,7 @@ export class TicTacToe {
 			this.setMessage("last action reversed");
 		}
 	}
+
 	setActive = (active) => {
 		this.active = active;
 	}

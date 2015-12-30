@@ -8,9 +8,11 @@ export class GameState {
 		else
 			this.grid = TicTacToeLogic.generateBoard(this.size);
 	}
+
 	generateNextGameState(prevGameState){
 		this.grid = JSON.parse(JSON.stringify(prevGameState.grid)); //TODO better copy
 	}
+
 	setLastMove(x, y, piece) {
 		this.lastMove = {"x" : x, "y" : y, "piece" : piece};//switch to deconstruction?
 	}
