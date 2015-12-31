@@ -6,7 +6,7 @@
 		<div class="board">
 			<div class="column" repeat.for="column of currentGS.grid">
 				<div  repeat.for="cell of column">
-					<button class="cell ${$parent.$parent.active ? '' : 'disabledButton'}" disabled.bind="$parent.$parent.winningPlayer != '-' || !$parent.$parent.active" click.delegate="$parent.$parent.move($parent.$index, $index, $parent.$parent.turnObject.getCurrentPlayer())">${cell}</button>
+					<button class="cell ${$parent.$parent.active ? '' : 'disabledButton'}" disabled.bind="$parent.$parent.winningPlayer != '-' || !$parent.$parent.active" click.delegate="$parent.$parent.setMove($parent.$index, $index, $parent.$parent.turnObject.getCurrentPlayer())">${cell}</button>
 				</div>
 			</div>
 		</div>
