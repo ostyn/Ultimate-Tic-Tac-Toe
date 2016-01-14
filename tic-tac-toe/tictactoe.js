@@ -26,7 +26,7 @@ export class TicTacToe {
 		}
 	}
 	setMove(x, y, token) {
-		this.pendingMove = {x:x, y:y, token:token};
+		this.move({x:x, y:y, token:token});
 	}
 	newGame() {
 		this.active = true;
@@ -35,19 +35,11 @@ export class TicTacToe {
 		this.stack = [];
 		this.currentGS = new GameState(this.size);
 		this.turnObject.reset();
-
-		while(this.winningPlayer === "-") {
-			//WAIT for input
-			//BLOCK on player move
-			//EXECUTE player move
-			this.move(this.pendingMove.x, this.pendingMove.y, this.pendingMove.token)
-			this.turnObject.advancePlayerTurn();
-		}
-		this.setMessage(`${this.winningPlayer} has won`);
-
+		if(this.turnObject.getCurrentPlayer().isAi)
+			this.move(this.turnObject.getCurrentPlayer().getMove(this.currentGS));
 	}
 
-	move(x, y, token) {
+	move({x, y, token}) {
 		if (this.isBoardInactive) {
 			return;
 		}
@@ -58,6 +50,15 @@ export class TicTacToe {
 			this.currentGS.setLastMove(x, y, token);
 			this.winningPlayer = TicTacToeLogic.hasGameEnded(this.size, this.currentGS.grid);
 			this.ticTacToeHooks.callOnMove(this.x, this.y, x, y, token, this.winningPlayer !== "-");
+			this.turnObject.advancePlayerTurn();
+		}
+		if(this.winningPlayer === "-") {
+			if(this.turnObject.getCurrentPlayer().isAi) {
+				this.move(this.turnObject.getCurrentPlayer().getMove(this.currentGS));
+			}
+		}
+		else {
+			this.setMessage(`${this.winningPlayer} has won`);
 		}
 	}
 
